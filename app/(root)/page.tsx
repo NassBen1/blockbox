@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 "use client"
 import React, {useEffect, useState} from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Web3 from 'web3';
 import { contractAddress } from "@/constants/global";
 import contractABI from "@/constants/contractABI";
-
-
 
 interface Post {
     postId: number;
@@ -30,6 +27,27 @@ const Home: React.FC = () => {
     const { register, handleSubmit, reset } = useForm<FormValues>();
     const [posts, setPosts] = React.useState<Post[]>([]);
 
+    const likePost = async (postId: number) => {
+        try {
+            if (window.ethereum) {
+                const web3 = new Web3(window.ethereum);
+                await window.ethereum.enable();
+                const contract = new web3.eth.Contract(contractABI, contractAddress);
+                const accounts = await web3.eth.getAccounts();
+                const userAddress = accounts[0];
+
+                // Appeler la fonction likePost du smart contrat
+                await contract.methods.likePost(postId).send({ from: userAddress });
+
+                // Mettre à jour la liste des posts après le like
+                getAllPosts();
+            } else {
+                console.error('MetaMask n\'est pas installé');
+            }
+        } catch (error) {
+            console.error('Erreur lors du like du post sur la blockchain :', error);
+        }
+    };
     const getAllPosts = async () => {
         try {
             if (window.ethereum) {
@@ -113,16 +131,22 @@ const Home: React.FC = () => {
             {/* Afficher la liste des posts */}
             {posts.map((post) => (
                 <div key={post.postId} className="bg-dark-2 mt-3">
+                    <div className="w-full text-left text-xl text-light-2 font-semibold mb-2">
+                        {post.author} a posté :
+                    </div>
                     <div className="bg-dark-2 border shadow p-5 text-xl text-light-2 font-semibold">{post.content}</div>
                     <div className="bg-primary-500 p-1 rounded-b-lg border shadow flex flex-row flex-wrap">
 
-                            <div className="w-1/3 hover:bg-light-2 text-center text-xl text-black font-semibold">Like</div>
-                            <div
-                                className="w-1/3 hover:bg-light-2 border-l-4 border-r- text-center text-xl text-black font-semibold">Share
-                            </div>
-                            <div
-                                className="w-1/3 hover:bg-light-2 border-l-4 text-center text-xl text-black font-semibold">Comment
-                            </div>
+                        <div className="w-1/3 hover:bg-light-2 text-center text-xl text-black font-semibold"
+                             onClick={() => likePost(post.postId)}>
+                            Like ({post.likeCount})
+                        </div>
+                        <div
+                            className="w-1/3 hover:bg-light-2 border-l-4 border-r- text-center text-xl text-black font-semibold">Share
+                        </div>
+                        <div
+                            className="w-1/3 hover:bg-light-2 border-l-4 text-center text-xl text-black font-semibold">Comment
+                        </div>
                     </div>
                 </div>
             ))}
@@ -131,13 +155,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-=======
 
-export default function Home() {
-    return (
-        <>
-            <h1 className="head-text text-left">Accueil</h1>
-        </>
-    )
-}
->>>>>>> 195b88da8f76ad7b420efc90660efba4075f58ed
