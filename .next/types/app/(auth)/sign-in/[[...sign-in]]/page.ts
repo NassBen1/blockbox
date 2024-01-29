@@ -1,4 +1,4 @@
-// File: C:\Users\benna\Desktop\blockbox\app\(auth)\sign-in\[[...sign-in]]\page.tsx
+// File: C:\Users\benna\Desktop\blockbox_blockchain\app\(auth)\sign-in\[[...sign-in]]\page.tsx
 import * as entry from '../../../../../../app/(auth)/sign-in/[[...sign-in]]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

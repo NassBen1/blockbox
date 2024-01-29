@@ -1,6 +1,7 @@
 import {ClerkProvider} from "@clerk/nextjs";
 import {Inter} from "next/font/google";
 import '../globals.css'
+import Topbar from "@/components/shared/Topbar";
 
 export const metadata = {
     title: 'BlockBox',
@@ -14,9 +15,10 @@ export default function RootLayout({children }: { children: React.ReactNode}) {
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={`${inter.className} bg-dark-1`}>
-                    {children}
-                </body>
+            <Topbar />
+            <body className={`${inter.className} bg-dark-1`}>
+            {children}
+            </body>
             </html>
         </ClerkProvider>
     )

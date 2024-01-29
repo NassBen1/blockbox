@@ -1,4 +1,4 @@
-// File: C:\Users\benna\Desktop\blockbox\app\(auth)\layout.tsx
+// File: C:\Users\benna\Desktop\blockbox_blockchain\app\(auth)\layout.tsx
 import * as entry from '../../../../app/(auth)/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
