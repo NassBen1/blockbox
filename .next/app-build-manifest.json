@@ -1,5 +1,6 @@
 {
   "pages": {
+<<<<<<< HEAD
     "/(auth)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -11,6 +12,8 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/onboarding/page.js"
     ],
+=======
+>>>>>>> 195b88da8f76ad7b420efc90660efba4075f58ed
     "/(root)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -22,6 +25,15 @@
       "static/css/app/(root)/layout.css",
       "static/chunks/app/(root)/layout.js"
     ],
+<<<<<<< HEAD
+=======
+    "/(auth)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(auth)/layout.css",
+      "static/chunks/app/(auth)/layout.js"
+    ],
+>>>>>>> 195b88da8f76ad7b420efc90660efba4075f58ed
     "/(auth)/sign-in/[[...sign-in]]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -31,11 +43,14 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/sign-up/[[...sign-up]]/page.js"
+<<<<<<< HEAD
     ],
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
+=======
+>>>>>>> 195b88da8f76ad7b420efc90660efba4075f58ed
     ]
   }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client"
 import React, {useEffect, useState} from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -130,3 +131,13 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+=======
+
+export default function Home() {
+    return (
+        <>
+            <h1 className="head-text text-left">Accueil</h1>
+        </>
+    )
+}
+>>>>>>> 195b88da8f76ad7b420efc90660efba4075f58ed

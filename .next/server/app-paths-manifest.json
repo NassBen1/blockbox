@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "/not-found": "app/not-found.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/(auth)/onboarding/page": "app/(auth)/onboarding/page.js",
   "/(root)/page": "app/(root)/page.js",
   "/(auth)/sign-in/[[...sign-in]]/page": "app/(auth)/sign-in/[[...sign-in]]/page.js"
+=======
+  "/(root)/page": "app/(root)/page.js",
+  "/(auth)/sign-in/[[...sign-in]]/page": "app/(auth)/sign-in/[[...sign-in]]/page.js",
+  "/(auth)/sign-up/[[...sign-up]]/page": "app/(auth)/sign-up/[[...sign-up]]/page.js"
+>>>>>>> 195b88da8f76ad7b420efc90660efba4075f58ed
 }
