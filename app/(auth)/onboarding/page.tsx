@@ -53,7 +53,7 @@ const Page: React.FC<Props> = ({ user, btnTitle }: Props) => {
     useEffect(() => {
         // Cet effet se déclenche chaque fois que isUserRegistered change
         console.log('Valeur de isUserRegistered mise à jour :', isUserRegistered);
-        window.location.href = "/";
+
 
         // Ajoutez ici des actions supplémentaires en fonction de la valeur de isUserRegistered
     }, [isUserRegistered]);
@@ -88,13 +88,7 @@ const Page: React.FC<Props> = ({ user, btnTitle }: Props) => {
 
 
     return (
-        <div className="flex flex-col justify-start gap-10">
-            {isUserRegistered ? (
-                <div>
-                    {/* Afficher le message si l'utilisateur est déjà enregistré */}
-                    <p>Vous êtes déjà enregistré.</p>
-                </div>
-            ) : (
+
                 <div>
                     {/* Afficher le formulaire d'inscription si l'utilisateur n'est pas enregistré */}
                     <h1 className="text-3xl font-bold text-light-2"></h1>
@@ -127,8 +121,8 @@ const Page: React.FC<Props> = ({ user, btnTitle }: Props) => {
                         Enregistrez-vous
                     </Button>
                 </div>
-            )}
-        </div>
+
+
     );
 };
 
