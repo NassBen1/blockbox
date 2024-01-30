@@ -43,7 +43,7 @@ const Home: React.FC = () => {
     const { register, handleSubmit, reset } = useForm<FormValues>();
     const [posts, setPosts] = React.useState<Post[]>([]);
     const [commentingPostId, setCommentingPostId] = useState<number | null>(null);
-    const [postComments, setPostComments] = useState<Comment[]>([]);
+    const [postComments, setPostComments] = useState<{ [postId: number]: Comment[] }>({});
 
     const likePost = async (postId: number) => {
         try {
@@ -85,10 +85,12 @@ const Home: React.FC = () => {
                     username: usernames[index],
                 }));
 
-                // Mettre à jour l'état des commentaires dans le composant
-                setPostComments(newComments);
+                // Mettre à jour l'état des commentaires dans le composant en utilisant l'ID du post comme clé
+                setPostComments((prevComments) => ({
+                    ...prevComments,
+                    [postId]: newComments,
+                }));
 
-                // ... (restez ici ou ajoutez d'autres mises à jour nécessaires)
             } else {
                 console.error('MetaMask n\'est pas installé');
             }
@@ -96,7 +98,6 @@ const Home: React.FC = () => {
             console.error('Erreur lors de la récupération des commentaires depuis la blockchain :', error);
         }
     };
-
     useEffect(() => {
         // Appeler la fonction getCommentsForPost pour chaque post au chargement du composant
         posts.forEach((post) => {
@@ -182,6 +183,8 @@ const Home: React.FC = () => {
         }
     };
 
+
+
     useEffect(() => {
         // Appeler la fonction getAllPosts au chargement du composant
         getAllPosts();
@@ -258,7 +261,7 @@ const Home: React.FC = () => {
                         <div className="mt-3 text-light-2">
                             <div>
                                 <h3 className="bg-dark-2 border shadow p-2 text-xl text-light-2 font-semibold">Commentaires</h3>
-                                {postComments.map((comment, index) => (
+                                {postComments[post.postId] && postComments[post.postId].map((comment, index) => (
                                     <div key={index}>
                                         <p className="bg-dark-2 border shadow p-2 text-subtle-medium text-light-2 font-semibold">{comment.username}: {comment.comment}</p>
                                     </div>
