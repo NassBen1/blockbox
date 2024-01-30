@@ -9,20 +9,11 @@ export const sidebarLinks = [
         route: "/recherche",
         label: "Recherche",
     },
-    {
-        imgURL: "/assets/heart.svg",
-        route: "/activites",
-        label: "Activités",
-    },
-    {
-        imgURL: "/assets/create.svg",
-        route: "/create-b",
-        label: "Créer un Block",
-    },
+
     {
         imgURL: "/assets/community.svg",
-        route: "/communities",
-        label: "Communautés",
+        route: "/messagesprives",
+        label: "Messages Privés",
     },
     {
         imgURL: "/assets/user.svg",
