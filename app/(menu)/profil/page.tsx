@@ -19,6 +19,7 @@ const Page = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [postCount, setPostCount] = useState<number | null>(null);
     const [showFollow, setshowFollow] = useState<boolean>(false);
+    const [isFollowing, setIsFollowing] = useState<boolean>(false);
     const fetchFollowerCount = async (): Promise<void> => {
         try {
             const web3 = new Web3(window.ethereum);
@@ -73,6 +74,13 @@ const Page = () => {
                     setshowFollow(true)
             }
 
+            let following : any;
+
+            if (currentUser && user) {
+                following = await contract.methods.isFollowing(currentUser.username, user.publicMetadata.ethAddress).call({ from: userAddress });
+                setIsFollowing(following);
+            }
+
         } catch (error) {
             console.error('Erreur lors de la récupération du nombre de followers :', error);
             setIsLoading(false);  // Marquer que le chargement est terminé en cas d'erreur
@@ -81,6 +89,87 @@ const Page = () => {
 
     useEffect(() => {
         fetchFollowerCount();
+    }, []);
+
+    const NewFollow = async (currentUser: CurrentUser): Promise<void> => {
+        try {
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+            const accounts = await web3.eth.getAccounts();
+            const userAddress = accounts[0];
+
+            if (currentUser && currentUser.username) {
+                // Utilisez la fonction followUserByUsername du smart contrat
+                try {
+                    await contract.methods.followUser(currentUser.username).send({ from: userAddress });
+                    const successMessage = `Vous suivez maintenant ${currentUser.username}`;
+                    fetchFollowerCount();
+                    window.alert(successMessage);
+
+                } catch (error) {
+                    console.error('Erreur lors du suivi de l\'utilisateur par username :', error);
+                }
+            } else {
+                console.error('Impossible de suivre un utilisateur sans spécifier le username.');
+            }
+        } catch (error) {
+            console.error('Erreur lors du suivi de l\'utilisateur :', error);
+        }
+    };
+
+    const unfollowUser = async () => {
+        try {
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+            const accounts = await web3.eth.getAccounts();
+            const userAddress = accounts[0];
+
+            // Vérifier si l'utilisateur est actuellement suivi
+            const isFollowing = await contract.methods.isFollowing(currentUser?.username).call({ from: userAddress });
+
+            if (isFollowing) {
+                await contract.methods.unfollowUser(currentUser?.username).send({ from: userAddress });
+                const successMessage = `Vous ne suivez plus ${currentUser.username}`;
+                fetchFollowerCount();
+                window.alert(successMessage);
+
+            } else {
+                console.error('Vous ne suivez pas encore cet utilisateur.');
+            }
+        } catch (error) {
+            console.error('Erreur lors du désabonnement de l\'utilisateur :', error);
+        }
+    };
+
+
+    // Fonction pour vérifier si l'utilisateur actuel suit un autre utilisateur
+    const checkIsFollowing = async () => {
+        try {
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+            const accounts = await web3.eth.getAccounts();
+            const userAddress = accounts[0];
+
+            // Remplacez 'usernameToCheck' par le nom d'utilisateur que vous souhaitez vérifier
+            const usernameToCheck = currentUser?.username;
+
+            let result:any;
+            if (usernameToCheck) {
+                result = await contract.methods.isFollowing(usernameToCheck).call({ from: userAddress });
+
+                // Mettez à jour l'état avec le résultat
+                setIsFollowing(result);
+            } else {
+                console.error('Nom d\'utilisateur manquant pour la vérification du suivi.');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la vérification si l\'utilisateur suit :', error);
+        }
+    };
+
+    useEffect(() => {
+        // Appelez la fonction de vérification au chargement de la page
+        checkIsFollowing();
     }, []);
 
     const fetchPostCountByUsername = async (user: CurrentUser | null): Promise<number | null> => {
@@ -136,9 +225,6 @@ const Page = () => {
                                     className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                                 />
                             </div>
-
-
-
                         </div>
                         <div className="w-full px-4 text-center mt-20">
                             <div className="flex justify-center py-4 lg:pt-4 pt-8">
@@ -158,12 +244,21 @@ const Page = () => {
                                 </div>
                                 {showFollow && (
                                     <button
-                                        className="float-left bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
-                                        onClick={() => {
-                                            // Ajoutez votre logique de gestion du clic sur le bouton Follow ici
+                                        className={`float-left bg-primary-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded ${isFollowing ? 'bg-red-500' : ''}`}
+                                        onClick={async () => {
+                                            if (currentUser) {
+                                                if (isFollowing) {
+                                                    // Appeler la fonction Unfollow
+                                                    await unfollowUser();
+                                                } else {
+                                                    // Appeler la fonction Follow
+                                                    await NewFollow(currentUser);
+                                                }
+                                                // Ajoutez ici toute logique supplémentaire après le suivi ou le désabonnement (si nécessaire)
+                                            }
                                         }}
                                     >
-                                        Follow
+                                        {isFollowing ? 'Unfollow' : 'Follow'}
                                     </button>
                                 )}
                             </div>

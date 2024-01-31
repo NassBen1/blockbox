@@ -249,9 +249,9 @@ const contractABI =[
     {
         "inputs": [
             {
-                "internalType": "address",
-                "name": "_userToFollow",
-                "type": "address"
+                "internalType": "string",
+                "name": "_usernameToFollow",
+                "type": "string"
             }
         ],
         "name": "followUser",
@@ -480,6 +480,25 @@ const contractABI =[
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_usernameToCheck",
+                "type": "string"
+            }
+        ],
+        "name": "isFollowing",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "isRegistered",
         "outputs": [
@@ -550,6 +569,19 @@ const contractABI =[
             }
         ],
         "name": "sendMessageDirectly",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_usernameToUnfollow",
+                "type": "string"
+            }
+        ],
+        "name": "unfollowUser",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
