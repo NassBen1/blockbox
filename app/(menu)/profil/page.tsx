@@ -5,17 +5,17 @@ import Web3 from 'web3';
 import { contractAddress } from "@/constants/global";
 import contractABI from "@/constants/contractABI";
 
-
 interface CurrentUser {
     username: string;
     bio: string;
     // ... autres propriétés de currentUser
 }
+
 const Page = () => {
     const { user } = useUser();
     const isConnectedWithMetamask = user?.publicMetadata?.ethAddress != null;
     const [followerCount, setFollowerCount] = useState<number | null>(null);
-    const [currentUser, setCurrentUser] = useState<any | null>(null);
+    const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [postCount, setPostCount] = useState<number | null>(null);
 
@@ -26,7 +26,20 @@ const Page = () => {
             const accounts = await web3.eth.getAccounts();
             const userAddress = accounts[0];
 
-            const count = await contract.methods.getFollowerCount(userAddress).call();
+            // Extraire le paramètre username de l'URL
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const usernameParam = urlSearchParams.get('username');
+            console.log(usernameParam)
+
+            let count;
+
+            if (usernameParam) {
+                // Si le paramètre username est présent dans l'URL, utilisez la fonction getUserByUsername du smart contrat
+                count = await contract.methods.getFollowerCountByUsername(usernameParam).call({ from: userAddress });
+            } else {
+                // Sinon, utilisez la fonction getFollowerCount du smart contrat avec l'adresse de l'utilisateur actuel
+                count = await contract.methods.getFollowerCount(userAddress).call();
+            }
 
             // Vérification de type pour s'assurer que count est un nombre
             if (!isNaN(Number(count))) {
@@ -35,8 +48,20 @@ const Page = () => {
                 console.error('Le nombre de followers récupéré n\'est pas un nombre valide.');
             }
 
-            // Récupérer les informations de l'utilisateur actuel
-            const currentUserInfo = await contract.methods.getCurrentUser().call({ from: userAddress });
+            // Récupérer les informations de l'utilisateur actuel ou du username fourni
+            let currentUserInfo: CurrentUser | null;
+
+            if (usernameParam) {
+                try {
+                    currentUserInfo = await contract.methods.getUserByUsername(usernameParam).call();
+                } catch (getUserError) {
+                    console.error('Erreur lors de la récupération de l\'utilisateur par username :', getUserError);
+                    currentUserInfo = null;
+                }
+            } else {
+                currentUserInfo = await contract.methods.getCurrentUser().call({ from: userAddress });
+            }
+
             setCurrentUser(currentUserInfo);
             setIsLoading(false);  // Marquer que le chargement est terminé
 
@@ -45,8 +70,6 @@ const Page = () => {
             setIsLoading(false);  // Marquer que le chargement est terminé en cas d'erreur
         }
     };
-
-
 
     useEffect(() => {
         fetchFollowerCount();
@@ -80,12 +103,13 @@ const Page = () => {
     };
 
     useEffect(() => {
-        fetchFollowerCount();
-        fetchPostCountByUsername(currentUser).then((count) => {
-            if (count !== null) {
-                setPostCount(count);
-            }
-        });
+        if (currentUser) {
+            fetchPostCountByUsername(currentUser).then((count) => {
+                if (count !== null) {
+                    setPostCount(count);
+                }
+            });
+        }
     }, [currentUser]);
 
     return (
@@ -93,7 +117,7 @@ const Page = () => {
             {isLoading ? (
                 // Afficher un indicateur de chargement ici
                 <div>Loading...</div>
-            ) : (
+            ) : currentUser ? (
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
                     <div className="flex flex-wrap justify-center">
                         <div className="w-full px-4 flex justify-center">
@@ -139,6 +163,9 @@ const Page = () => {
                         </div>
                     </div>
                 </div>
+            ) : (
+                // Afficher une page d'utilisateur introuvable si currentUser est null
+                <div className="w-full px-4 flex justify-center text-light-2">Utilisateur introuvable</div>
             )}
         </>
     );

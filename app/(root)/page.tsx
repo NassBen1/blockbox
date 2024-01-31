@@ -241,7 +241,12 @@ const Home: React.FC = () => {
             {posts.map((post) => (
                 <div key={post.postId} className="bg-dark-2 mt-3">
                     <div className="w-full text-left text-xl text-light-2 font-semibold mb-2">
-                        {post.author} a blocké :
+            <span
+                style={{cursor: 'pointer'}}
+                onClick={() => window.location.href = `/profil?username=${post.author}`}
+            >
+                {post.author}
+            </span> a blocké :
                     </div>
                     <div className="bg-dark-2 border shadow p-5 text-xl text-light-2 font-semibold">{post.content}</div>
                     <div className="bg-primary-500 p-1 rounded-b-lg border shadow flex flex-row flex-wrap">
