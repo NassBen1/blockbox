@@ -18,7 +18,7 @@ const Page = () => {
     const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [postCount, setPostCount] = useState<number | null>(null);
-
+    const [showFollow, setshowFollow] = useState<boolean>(false);
     const fetchFollowerCount = async (): Promise<void> => {
         try {
             const web3 = new Web3(window.ethereum);
@@ -62,8 +62,16 @@ const Page = () => {
                 currentUserInfo = await contract.methods.getCurrentUser().call({ from: userAddress });
             }
 
+
             setCurrentUser(currentUserInfo);
             setIsLoading(false);  // Marquer que le chargement est terminé
+
+            if (usernameParam) {
+                let userConnected : any;
+                userConnected = await contract.methods.getCurrentUser().call({ from: userAddress });
+                if (usernameParam !== userConnected.username)
+                    setshowFollow(true)
+            }
 
         } catch (error) {
             console.error('Erreur lors de la récupération du nombre de followers :', error);
@@ -128,9 +136,13 @@ const Page = () => {
                                     className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                                 />
                             </div>
+
+
+
                         </div>
                         <div className="w-full px-4 text-center mt-20">
                             <div className="flex justify-center py-4 lg:pt-4 pt-8">
+
                                 <div className="mr-4 p-3 text-center">
                                     <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                                         {followerCount}
@@ -144,6 +156,16 @@ const Page = () => {
                                     </span>
                                     <span className="text-sm text-blueGray-400">Blocks</span>
                                 </div>
+                                {showFollow && (
+                                    <button
+                                        className="float-left bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
+                                        onClick={() => {
+                                            // Ajoutez votre logique de gestion du clic sur le bouton Follow ici
+                                        }}
+                                    >
+                                        Follow
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
