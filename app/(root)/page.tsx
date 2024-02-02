@@ -129,7 +129,7 @@ const Home: React.FC = () => {
                     content: contents[index],
                     author: authors[index],
                     likeCount: Number(likeCounts[index]),
-                }));
+                })).reverse();
                 console.log(newPosts)
                 setPosts(newPosts);
 
