@@ -2,6 +2,8 @@
 
 Ce projet introduit BlockBox, une plateforme révolutionnaire de réseau social décentralisé, construite sur la robuste infrastructure de la blockchain Ethereum en utilisant Solidity pour élaborer le contrat intelligent au cœur du système. BlockBox redéfinit les interactions sociales en ligne en permettant aux utilisateurs de s'enregistrer, de publier des messages, de commenter les contributions des autres, et de tisser des liens en suivant les profils. Un aspect distinctif de BlockBox est le maintien de l'anonymat des utilisateurs, qui sont reconnus sur la plateforme par des pseudonymes, offrant ainsi une couche supplémentaire de confidentialité.
 
+
+1. Lien vidéo :https://drive.google.com/file/d/1-9igRS4dSlmhXm2QBI470G56WqzwleJk/view?usp=drive_link
 ## Caractéristiques
 - **Inscription d'utilisateurs** : Les utilisateurs peuvent s'inscrire avec un nom d'utilisateur et une bio.
 - **Gestion de posts** : Les utilisateurs peuvent créer des posts, les commenter, et les liker.
@@ -45,3 +47,4 @@ Pour utiliser ce projet, vous devez avoir Node.js et npm installés sur votre ma
   ```
   followUser("nomUtilisateurASuivre");
   ```
+
