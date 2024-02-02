@@ -104,20 +104,48 @@ const Page: React.FC = () => {
         // Appeler fetchMessagesWithUser lorsque selectedUser change
         if (selectedUser) {
             console.log("selectedUser:",selectedUser)
+            fetchMessagesWithUser(selectedUser);
         }
     }, [selectedUser]);
 
     const handleUserClick = (username: string) => {
             setSelectedUser(username);
-            fetchMessagesWithUser(username);
     };
+
+    const handleSendMessage = async (message: string) => {
+        try {
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+            const accounts = await web3.eth.getAccounts();
+            const userAddress = accounts[0];
+
+            // Appel à la fonction sendMessageDirectlyByUsername dans le contrat
+            await contract.methods.sendMessageDirectlyByUsername(selectedUser, message).send({ from: userAddress });
+
+            // Rafraîchir les messages après l'envoi
+            fetchMessagesWithUser(selectedUser);
+        } catch (error) {
+            console.error("Erreur lors de l'envoi du message :", error);
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            // Appeler la fonction pour envoyer le message lorsque la touche "Enter" est pressée
+            handleSendMessage(event.currentTarget.value);
+
+            // Effacer le contenu de l'input après l'envoi du message
+            event.currentTarget.value = '';
+        }
+    };
+
 
     return (
         <div className="w-full container mx-auto shadow-lg rounded-lg">
             {/* Header */}
             <div className="w-full px-5 py-5 flex justify-between items-center bg-dark-4 border-b-2">
                 <div className="font-semibold text-2xl text-light-2 text-center mx-auto">
-                    Messages privés de :{currentUser?.username}
+                    Messages privés de : {currentUser?.username}
                 </div>
             </div>
             {/* End Header */}
@@ -138,7 +166,7 @@ const Page: React.FC = () => {
                             <div className="w-1/4">{/* Ajoutez ici la logique pour afficher l'avatar ou d'autres informations sur l'utilisateur */}</div>
                             <div className="w-full">
                                 <div className="text-lg font-semibold">{username}</div>
-                                <span className="text-gray-500">Pick me at 9:00 AM</span>
+                                <span className="text-gray-500">Lancer la conversation</span>
                                 {/* Ajoutez ici des informations supplémentaires, par exemple, le dernier message */}
                             </div>
                         </div>
@@ -178,6 +206,7 @@ const Page: React.FC = () => {
                                 className="w-full bg-gray-300 py-5 px-3 rounded-xl"
                                 type="text"
                                 placeholder="type your message here..."
+                                onKeyDown={handleKeyDown}
                             />
                         ) : (
                             <div className="text-center text-gray-500">
