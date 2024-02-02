@@ -166,40 +166,6 @@ const contractABI =[
     {
         "inputs": [
             {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "allPosts",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "postId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "content",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "author",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "likeCount",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "string",
                 "name": "_newBio",
                 "type": "string"
@@ -257,6 +223,162 @@ const contractABI =[
         "name": "followUser",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_postId",
+                "type": "uint256"
+            }
+        ],
+        "name": "likePost",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_username",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_bio",
+                "type": "string"
+            }
+        ],
+        "name": "registerUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_receiverUsername",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_content",
+                "type": "string"
+            }
+        ],
+        "name": "sendMessageDirectlyByUsername",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_usernameToUnfollow",
+                "type": "string"
+            }
+        ],
+        "name": "unfollowUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_postId",
+                "type": "uint256"
+            }
+        ],
+        "name": "unlikePost",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "allPosts",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "postId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "content",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "author",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "likeCount",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getAllMessagedUsernames",
+        "outputs": [
+            {
+                "internalType": "string[]",
+                "name": "",
+                "type": "string[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_username",
+                "type": "string"
+            }
+        ],
+        "name": "getAllMessagesWithUser",
+        "outputs": [
+            {
+                "internalType": "string[]",
+                "name": "",
+                "type": "string[]"
+            },
+            {
+                "internalType": "string[]",
+                "name": "",
+                "type": "string[]"
+            },
+            {
+                "internalType": "string[]",
+                "name": "",
+                "type": "string[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "",
+                "type": "uint256[]"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -438,6 +560,25 @@ const contractABI =[
                 "type": "string"
             }
         ],
+        "name": "getUserAddressByUsername",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_username",
+                "type": "string"
+            }
+        ],
         "name": "getUserByUsername",
         "outputs": [
             {
@@ -512,19 +653,6 @@ const contractABI =[
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_postId",
-                "type": "uint256"
-            }
-        ],
-        "name": "likePost",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
         "inputs": [],
         "name": "postCount",
         "outputs": [
@@ -535,68 +663,6 @@ const contractABI =[
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_username",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_bio",
-                "type": "string"
-            }
-        ],
-        "name": "registerUser",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_receiver",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "_content",
-                "type": "string"
-            }
-        ],
-        "name": "sendMessageDirectly",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_usernameToUnfollow",
-                "type": "string"
-            }
-        ],
-        "name": "unfollowUser",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_postId",
-                "type": "uint256"
-            }
-        ],
-        "name": "unlikePost",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -656,6 +722,11 @@ const contractABI =[
             {
                 "internalType": "uint256",
                 "name": "followerCount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "totalDirectMessages",
                 "type": "uint256"
             }
         ],

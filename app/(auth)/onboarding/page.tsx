@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 interface Props {
     user: {
         id: string;
-        objectfId: string;
+        objectId: string;
         username: string;
         name: string;
         bio: string;
