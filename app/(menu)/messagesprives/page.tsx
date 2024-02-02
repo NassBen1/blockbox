@@ -3,6 +3,8 @@ import Web3 from 'web3';
 import contractABI from "@/constants/contractABI";
 import {contractAddress} from "@/constants/global";
 import {useEffect, useState} from "react";
+import {Simulate} from "react-dom/test-utils";
+import select = Simulate.select;
 
 
 interface CurrentUser {
@@ -101,9 +103,19 @@ const Page: React.FC = () => {
     useEffect(() => {
         fetchUserData();
         fetchMessagedUsernames();
+        let parametre;
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const selectedUserParam = urlSearchParams.get('selectedUser');
         // Appeler fetchMessagesWithUser lorsque selectedUser change
-        if (selectedUser) {
-            console.log("selectedUser:",selectedUser)
+        if (selectedUser || selectedUserParam) {
+            if (selectedUserParam){
+                setSelectedUser(selectedUserParam)
+            }
+
+            if (selectedUser){
+                setSelectedUser(selectedUser)
+            }
+            console.log("selectedUser:",parametre)
             fetchMessagesWithUser(selectedUser);
         }
     }, [selectedUser]);
@@ -120,6 +132,7 @@ const Page: React.FC = () => {
             const userAddress = accounts[0];
 
             // Appel à la fonction sendMessageDirectlyByUsername dans le contrat
+
             await contract.methods.sendMessageDirectlyByUsername(selectedUser, message).send({ from: userAddress });
 
             // Rafraîchir les messages après l'envoi
