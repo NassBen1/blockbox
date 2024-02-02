@@ -15,12 +15,14 @@ export default function RootLayout({children }: { children: React.ReactNode}) {
     return (
         <ClerkProvider>
             <html lang="en">
-            <Topbar />
-            <body className={`${inter.className} bg-dark-1`}>
-            {children}
-            </body>
+            <Topbar/>
+            <section className="main-container">
+                <body className={`${inter.className} bg-dark-1 ml-48 mt-40`}>
+                {children}
+                </body>
+            </section>
             </html>
         </ClerkProvider>
-    )
+)
 
 }

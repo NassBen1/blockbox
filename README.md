@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Réseau Social Décentralisé BlockBox
 
-## Getting Started
+Ce projet introduit BlockBox, une plateforme révolutionnaire de réseau social décentralisé, construite sur la robuste infrastructure de la blockchain Ethereum en utilisant Solidity pour élaborer le contrat intelligent au cœur du système. BlockBox redéfinit les interactions sociales en ligne en permettant aux utilisateurs de s'enregistrer, de publier des messages, de commenter les contributions des autres, et de tisser des liens en suivant les profils. Un aspect distinctif de BlockBox est le maintien de l'anonymat des utilisateurs, qui sont reconnus sur la plateforme par des pseudonymes, offrant ainsi une couche supplémentaire de confidentialité.
 
-First, run the development server:
+## Caractéristiques
+- **Inscription d'utilisateurs** : Les utilisateurs peuvent s'inscrire avec un nom d'utilisateur et une bio.
+- **Gestion de posts** : Les utilisateurs peuvent créer des posts, les commenter, et les liker.
+- **Système de followers** : Les utilisateurs peuvent suivre et se désabonner d'autres utilisateurs.
+- **Messages directs** : Envoi de messages directs entre utilisateurs.
+- **Comptage de followers et de likes** : Le contrat stocke et permet de récupérer le nombre de followers d'un utilisateur ainsi que le nombre de likes d'un post.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Technologies
+- **Solidity** : Langage de programmation pour écrire les contrats intelligents.
+- **Ethereum Blockchain** : Plateforme choisie pour déployer le contrat intelligent.
+- **Clerk** : Plateforme de gestion d'utilisateurs et d'authentification
+- **Node.js & npm** : Nécessaires pour la mise en place de notre environnement de développement
+- **Hardhat** : Hardhat est un environnement de développement Ethereum qui facilite la création, le test, et le débogage de contrats intelligents.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Pour utiliser ce projet, vous devez avoir Node.js et npm installés sur votre machine.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clonez le dépôt :
+   ```
+   git clone 
+   <lien>
+   ```
+2. Installez les dépendances :
+   ```
+   npm install
+   ```
+3. Compilez et déployez le contrat intelligent sur un réseau de test (par exemple, Ganache) :
+   ```
+   Demande à Nassim la commande
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Exemples de Fonctions
+- **Inscription d'un nouvel utilisateur** :
+  ```
+  registerUser("nomUtilisateur", "Ceci est une bio.");
+  ```
+- **Création d'un post** :
+  ```
+  createPost("Ceci est le contenu de mon post.");
+  ```
+- **Suivre un utilisateur** :
+  ```
+  followUser("nomUtilisateurASuivre");
+  ```
